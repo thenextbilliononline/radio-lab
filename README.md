@@ -5,8 +5,8 @@ raspi radio-lab for wifi heatmap
 ```
 git clone https://github.com/thenextbilliononline/radio-lab.git
 cd radio-labs/scripts
-./meshmap_ap+script.sh
-./configure-gps.sh
+sudo ./create-ap.sh
+sudo ./configure-gps.sh
 ```
 ## create-ap.sh
 Turns onboard wireless module of the Raspberry Pi to an ACCESS POINT.
