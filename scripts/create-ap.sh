@@ -12,7 +12,7 @@ iface lo inet loopback
 
 allow hotplug wlan-ap
 iface wlan-ap inet static
-    address 10.0.0.0.1
+    address 10.0.0.1
     netmask 255.255.255.0
     network 10.0.0.0
     broadcast 10.0.0.0.255
