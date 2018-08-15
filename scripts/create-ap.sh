@@ -64,7 +64,7 @@ echo "denyinterfaces wlan-ap" >> /etc/dhcpcd.conf
 # Enable hostapd service
 if [ -f /etc/default/hostapd ]; then
     sed '\?^DAEMON_CONF?d' /etc/default/hostapd | sudo tee /etc/default/hostapd > /dev/null
-    sudo echo DAEMON_CONF="/etc/hostapd.conf" | sudo tee --append /etc/default/hostapd > /dev/null
+    sudo echo DAEMON_CONF="/etc/hostapd/hostapd.conf" | sudo tee --append /etc/default/hostapd > /dev/null
 fi
 
 cat <<"EOF">  /etc/systemd/system/hostapd.service
