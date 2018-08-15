@@ -1,6 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 
-sudo bash
 apt-get update
 
 # Install packages to run IEEE 802.11 Access Point
