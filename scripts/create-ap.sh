@@ -10,12 +10,11 @@ cat <<"EOF">> /etc/network/interfaces
 auto lo
 iface lo inet loopback
 
-allow hotplug wlan-ap
+allow-hotplug wlan-ap
 iface wlan-ap inet static
     address 10.0.0.1
     netmask 255.255.255.0
-    network 10.0.0.0
-    broadcast 10.0.0.255
+
 
 allow-hotplug eth0
 iface eth0 inet dhcp
