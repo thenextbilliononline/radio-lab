@@ -8,6 +8,7 @@ cd radio-labs/scripts
 sudo ./create-ap.sh
 sudo ./configure-gps.sh
 ```
+
 ## create-ap.sh
 Turns onboard wireless module of the Raspberry Pi to an ACCESS POINT.
 - SSID: mesh-mapper
@@ -17,10 +18,10 @@ Turns onboard wireless module of the Raspberry Pi to an ACCESS POINT.
 
 ## configure-gps.sh
 - Enables and Configures raspberry pi UART port
-- Installs GPS modules
-- Activates it on boot
+- Installs GPS software (gpsd with both legacy and python gpsd-clients)
+- Activates it on boot with systemd
 
-## GPS connectionto Raspberry Pi GPIO
+## GPS connection to Raspberry Pi GPIO
 
 | GPS | Rasp Pi  | GPS |
 |-----|:--------:|-----|
@@ -29,4 +30,37 @@ Turns onboard wireless module of the Raspberry Pi to an ACCESS POINT.
 |     |   5 6    | GND |
 |     |   6 8    | RX  |
 |     |   9 10   | TX  |
+
+
+### GPS Daemon - View: NMEA to JSON
+Command: `gpspipe -r localhost:2947 | gpsdecode`
+
+```JSON
+{
+    "class": "TPV",
+    "device": "stdin",
+    "mode": 3,
+    "time": "2018-08-16T04:20:00.000Z",
+    "ept": 0.005,
+    "lat": 40.7440853,
+    "lon": -74.0087865,
+    "alt": 14.8,
+    "speed": 0.062,
+    "climb": 0.0,
+}
+```
+
+### GPS Daemon - View: Console
+Command: `cgps -s`
+
+```
+┌───────────────────────────────────────────┐
+│    Time:       2018-08-16T04:20:00.000Z   │
+│    Latitude:   40.7440853 N               │
+│    Longitude:  74.0087865 W               │
+│    Altitude:   14.8 m                     │
+│    Speed:      0.3 kph                    │
+│    Status:     3D FIX (8 secs)            │
+└───────────────────────────────────────────┘
+```
 
