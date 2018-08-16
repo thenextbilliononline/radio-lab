@@ -1,21 +1,30 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
+## Nuke serial-getty service on serial0
 sudo systemctl stop serial-getty@ttyS0.service
 sudo systemctl disable serial-getty@ttyS0.service
 
-sudo apt-get update 
+## Install gps-daemon and all gpsd-clients
+sudo apt-get update
 sudo apt-get install -y gpsd gpsd-clients python-gps
-sudo systemctl stop gpsd.socket
-sudo systemctl disable gpsd.socket
 
-sudo bash
-echo     enable_uart=1 >> /boot/config.txt
+## Pass gps-device '/dev/ttyS0' to gps-daemon
+sudo sed -i "s/^\(GPSD_OPTIONS\)=.*/GPSD_OPTIONS=\"\/dev\/ttyS0\"/g" /etc/default/gpsd
+
+## Restart gps-daemon
+for x in enable restart; do sudo systemctl $x gpsd.socket; done
+
+## Enable UART in boot config if missing
+grep -q "enable_uart=0" /boot/config.txt
+if [ $? -eq 1 ]; then
+  echo enable_uart=1 | sudo tee -a /boot/config.txt
+else
+  :
+fi
+
 exit
 
-sudo sed -i "s#exit 0#gpsd /dev/ttyS0 -F /var/run/gpsd.sock\nexit 0#"  /etc/rc.local 
-
-
-# if it does not work use
+## Alternative Method:
 # raspi-config
 ### interfaces options
 ###  Serial
